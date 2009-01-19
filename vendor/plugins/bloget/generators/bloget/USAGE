@@ -1,0 +1,9 @@
+Description:
+  This generator installs Bloget inside your Rails application.
+  
+  It will copy models, controllers, views, and migrations for Bloget
+  into your application. The internals of the models and controllers
+  remain in this plugin, but the files are copied so you may extend them.
+
+Example:
+  ./script/generate bloget

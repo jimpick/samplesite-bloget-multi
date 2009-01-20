@@ -1,13 +1,10 @@
 <h1><%= @blog.name %></h1>
 
+<% if current_site %>
 <p>Debug current_site: <%= current_site.subdomain %></p>
-
-<p>
-<%= link_to "Signup", signup_url %>
-<%= link_to "Login", login_url %>
-<%= link_to "Logout", logout_url %>
-</p>
-
+<% else %>
+<p>Debug current_site: None</p>
+<% end %>
 
 <% if logged_in? && Blogger.valid_blogger?(current_user) %>
   <ul class="horizontal-menu">

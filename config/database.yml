@@ -10,7 +10,7 @@ development:
   # Mysql Settings
   adapter: mysql
   encoding: utf8
-  database: samplesite_bloget_development
+  database: samplesite_bloget_multi_development
   username: root
   password:
   pool: 5

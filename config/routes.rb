@@ -1,10 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :sites
+
   map.resources :users
   map.resource  :session
 
   map.signup  '/signup', :controller => 'users',   :action => 'new' 
-  map.login  '/login',  :controller => 'session', :action => 'new'
-  map.logout '/logout', :controller => 'session', :action => 'destroy'
+  map.login  '/login',  :controller => 'sessions', :action => 'new'
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
  
   map.with_options :controller => 'posts', :conditions => {:method => :get} do |bloget|
     bloget.blog_url '/blog', :action => 'index'

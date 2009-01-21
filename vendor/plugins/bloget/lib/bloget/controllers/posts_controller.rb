@@ -26,6 +26,7 @@ module Bloget
     
         conditions = Hash.new
         conditions[:blog_id] = current_blog.id
+        conditions[:blog_type] = current_blog.class.to_s
         unless logged_in? and Blogger.valid_blogger?(current_user)
           conditions[:state] = 'published'
         end
@@ -111,7 +112,10 @@ module Bloget
     
       def load_post
         begin
-          @post ||= Post.find_by_permalink(params[:id])
+          conditions = Hash.new
+          conditions[:blog_id] = current_blog.id
+          conditions[:blog_type] = current_blog.class.to_s
+          @post ||= Post.find_by_permalink(params[:id], {:conditions => conditions})
           raise ActiveRecord::RecordNotFound if @post.nil?
           yield
         rescue ActiveRecord::RecordNotFound

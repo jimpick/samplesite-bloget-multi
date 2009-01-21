@@ -10,6 +10,8 @@ class BlogetMigration < ActiveRecord::Migration
 
     create_table :posts do |t|
       t.string :permalink, :null => false, :unique => true
+      t.integer :blog_id, :null => false
+      t.string :blog_type, :null => false
       t.integer :poster_id, :null => false
       t.string :poster_type, :null => false
       t.string :title, :null => false

@@ -1,4 +1,4 @@
-= Bloget
+= Bloget (with multisite modification)
 
 (rhymes with blasé)
 
@@ -7,6 +7,8 @@ Bloget is a plugin application that gives you a simple weblog.
 When you install Bloget, some lightweight controllers, models, and views will be copied into your Rails application. You will most likely override things in these models and controllers and edit these views.
 
 Bloget uses polymorphic associations for its idea of a +poster+, or an object that can make weblog posts and comments. This is so you can easily integrate it into your application.
+
+The multisite modification also uses a polymorphic association for its idea of a +blog+.  This might be associated with a site record in your application.
 
 == Requirements
 
@@ -22,6 +24,10 @@ You need some way to handle authentication. The RESTful Authentication plugin wi
 
 The Will Paginate plugin is also not necessary, but very useful. Bloget will detect it and paginate.
 
+The account_location plugin can be used to create a multisite setup, following the instructions here:
+
+  http://railstips.org/2006/11/13/building-a-multi-site-supported-application
+
 == Integration
 
 === Integrating with a user model
@@ -32,6 +38,33 @@ In your user model:
     has_many :posts, :as => :poster
     has_many :comments, :as => :poster
     
+=== Multisite Integration
+
+In your site model:
+
+    has_many :posts, :as => :blog
+
+If you are using the account_location plugin, you can add
+the following to the application controller:
+
+    include AccountLocation
+
+    before_filter :find_current_site
+    helper_method :current_site
+    attr_reader   :current_site
+    helper_method :current_blog
+    attr_reader   :current_blog
+
+    private
+
+      def find_current_site
+        @current_site = Site.find_by_subdomain(account_subdomain)
+        @current_blog = @current_site
+      end
+
+The modified 'posts' controller uses whatever is returned by
+'current_blog' to tie a post to a particular site/blog/etc.
+ 
 === Templates
 
 By default, the controllers specify a layout of "bloget," which is installed with Bloget. You can override this in the copied controllers.
@@ -54,3 +87,5 @@ If you would like to show your posts at the URL '/blog', you may want to add the
     end
 
 Copyright (c) 2007-2008 Clinton R. Nixon of Viget Labs, released under the MIT license
+Modifications Copyright (c) 2009 Jim Pick <jim@jimpick.com>, released under the MIT license
+

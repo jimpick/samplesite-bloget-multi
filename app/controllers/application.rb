@@ -13,11 +13,14 @@ class ApplicationController < ActionController::Base
   before_filter :find_current_site
   helper_method :current_site
   attr_reader   :current_site
+  helper_method :current_blog
+  attr_reader   :current_blog
 
   private
 
     def find_current_site
       @current_site = Site.find_by_subdomain(account_subdomain)
+      @current_blog = @current_site
     end
 
 end

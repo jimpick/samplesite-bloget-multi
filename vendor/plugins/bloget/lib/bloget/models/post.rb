@@ -6,8 +6,11 @@ module Bloget
         base.class_eval do
           
           has_many :comments, :order => 'created_at ASC'
+          belongs_to :blog, :polymorphic => true
           belongs_to :poster, :polymorphic => true
 
+          validates_presence_of :blog_id
+          validates_presence_of :blog_type
           validates_presence_of :poster_id
           validates_presence_of :poster_type
           validates_presence_of :title

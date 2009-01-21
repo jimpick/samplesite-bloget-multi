@@ -16,6 +16,8 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.save
     if @user.errors.empty?
+      blogger = Blogger.new(:poster_id => @user.id, :poster_type => 'User')
+      blogger.save!
       self.current_user = @user
       redirect_back_or_default('/')
       flash[:notice] = "Thanks for signing up!"

@@ -25,6 +25,7 @@ module Bloget
         @rss = formatted_posts_url(:format => 'atom')
     
         conditions = Hash.new
+        conditions[:blog_id] = current_blog.id
         unless logged_in? and Blogger.valid_blogger?(current_user)
           conditions[:state] = 'published'
         end
@@ -66,6 +67,7 @@ module Bloget
   
       def create
         @post = Post.new(params[:post])
+        @post.blog = current_blog
         @post.poster = current_user
     
         if @post.save
@@ -79,6 +81,7 @@ module Bloget
   
       def new
         @post = Post.new
+        @post.blog = current_blog
         @post.poster = current_user
       end
     

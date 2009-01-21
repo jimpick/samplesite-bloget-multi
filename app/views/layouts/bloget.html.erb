@@ -10,7 +10,7 @@
     <div id="header">
       <ul>
           <% if logged_in? %>
-          <li><b><%=h current_user.login %></li>
+          <li><b><%=h current_user.login %></b></li>
           <li><%= link_to 'Logout', logout_path %></li>
           <% else %>
           <li><%= link_to 'Login', login_path %></li>
@@ -22,5 +22,10 @@
     <div id="bloget">
       <%= yield %>
     </div>
+    <div id="bottom_nav">
+      <ul>
+        <li><a href="http://pennyminder.example.com:3000/">PennyMinder</a></li>
+        <li><a href="http://ymbd.example.com:3000/">Your Money by Design</a></li>
+      </ul>
   </body>
 </html>
